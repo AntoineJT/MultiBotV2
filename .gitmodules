@@ -1,0 +1,12 @@
+[submodule "PollPlugin"]
+	path = PollPlugin
+	url = https://github.com/MultiBotGravenDev/PollPlugin.git
+[submodule "ModerationPlugin"]
+	path = ModerationPlugin
+	url = https://github.com/MultiBotGravenDev/ModerationPlugin.git
+[submodule "ExperiencePlugin"]
+	path = ExperiencePlugin
+	url = https://github.com/MultiBotGravenDev/ExperiencePlugin.git
+[submodule "DatabasePlugin"]
+	path = DatabasePlugin
+	url = https://github.com/MultiBotGravenDev/DatabasePlugin.git
