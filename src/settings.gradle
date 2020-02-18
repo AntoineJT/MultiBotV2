@@ -1,0 +1,5 @@
+rootProject.name = 'MultiBotV2'
+include 'DatabasePlugin'
+include 'ExperiencePlugin'
+include 'ModerationPlugin'
+include 'PollPlugin'

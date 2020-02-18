@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+// defaultTasks 'build', 'copyPlugins', 'removePointlessBuildFolder'
+
+def pluginsPath = ['DatabasePlugin', 'ExperiencePlugin', 'ModerationPlugin', 'PollPlugin']
+
+task copyPlugins(type: Copy) {
+    for (path in pluginsPath) {
+        from "${path}/build/libs/${path}-1.0-SNAPSHOT.jar"
+        into "../build/plugins"
+    }
+}
+
+task removePointlessBuildFolder(type: Delete) {
+    delete 'build/'
+}
+
+task install {
+    dependsOn 'build'
+    dependsOn 'copyPlugins'
+    dependsOn 'removePointlessBuildFolder'
+}
