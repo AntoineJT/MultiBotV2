@@ -1,0 +1,25 @@
+{
+  "permissions":{
+    "default":{
+      "permissions":[
+        "*",
+        "-nbot.self.command.stop",
+        "-nbot.self.command.permission"
+      ],
+      "groups":[
+      ]
+    },
+    "admin":{
+      "permissions":[
+        "*"
+      ],
+      "groups":[
+      ]
+    }
+  },
+  "prefix":"!",
+  "owners":[
+    183602738435719168
+  ],
+  "token":"Insert your token here !"
+}
