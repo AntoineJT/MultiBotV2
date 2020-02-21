@@ -43,6 +43,9 @@ task createSecretFiles(type: Copy) {
 }
 
 task install {
+    group = 'build'
+    description = 'Builds this project!'
+
     dependsOn 'build'
     dependsOn 'copyPlugins'
     dependsOn 'removePointlessBuildFolder'
