@@ -1,0 +1,8 @@
+{
+  "database":{
+    "password":"",
+    "database":"multibot",
+    "host":"localhost",
+    "username":""
+  }
+}

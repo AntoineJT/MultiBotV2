@@ -2,3 +2,7 @@
 build/logs/
 build/plugins/*.jar
 src/.gradle/
+
+# secrets
+build/config.json
+build/config/database_plugin.json
