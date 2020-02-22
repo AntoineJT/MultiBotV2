@@ -11,6 +11,10 @@ build/plugins/*.jar
 # cache
 src/.gradle/
 
-# secrets
+# config files
+# -> secrets
 build/config.json
 build/config/database_plugin.json
+# -> user config files
+build/config/moderation_plugin.json
+build/config/poll_plugin.json

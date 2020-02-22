@@ -49,13 +49,33 @@ task createDatabasePluginConfigFile(type: Copy) {
     rename { String filename -> 'database_plugin.json' }
 }
 
-task createSecretFiles(type: Copy) {
+task createSecretFiles {
     /*
     copyExampleFile('../build/config.json.example')
     copyExampleFile('../build/config/database_plugin.json.example')
      */
     dependsOn 'createConfigFile'
     dependsOn 'createDatabasePluginConfigFile'
+}
+
+task createModerationConfigFile(type: Copy) {
+    from '../build/config/moderation_plugin.json.example'
+    into '../build/config'
+
+    rename { String filename -> 'moderation_plugin.json' }
+}
+
+task createPollConfigFile(type: Copy) {
+    from '../build/config/poll_plugin.json.example'
+    into '../build/config'
+
+    rename { String filename -> 'poll_plugin.json' }
+}
+
+task createConfigFiles {
+    dependsOn 'createSecretFiles'
+    dependsOn 'createModerationConfigFile'
+    dependsOn 'createPollConfigFile'
 }
 
 task copyDependencies(type: Copy) {
@@ -71,7 +91,7 @@ task install {
     dependsOn 'copyPlugins'
     dependsOn 'copyDependencies'
     dependsOn 'removePointlessBuildFolder'
-    dependsOn 'createSecretFiles'
+    dependsOn 'createConfigFiles'
 }
 
 build.dependsOn install
