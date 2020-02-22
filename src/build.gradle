@@ -1,33 +1,12 @@
 apply plugin: 'java'
 
-// import java.io.File;
-// import java.nio.file.Files;
-// import java.util.stream.Collectors;
-
-/*
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
-    }
-}
- */
-
-// defaultTasks 'build', 'copyPlugins', 'removePointlessBuildFolder'
-
 def pluginsPath = ['DatabasePlugin', 'ExperiencePlugin', 'ModerationPlugin', 'PollPlugin']
-// def token = ''
 
 repositories {
     mavenCentral()
     jcenter()
 }
 
-// stupid dependencies
-// TODO Get dependencies from subprojects
 dependencies {
     // DatabasePlugin
     compile group: 'com.zaxxer', name: 'HikariCP', version: '3.3.1'
@@ -52,7 +31,6 @@ task createConfigFile(type: Copy) {
     into '../build'
 
     rename { String filename -> 'config.json' }
-    // copyExampleFile('../build/config.json.example')
 }
 
 task createDatabasePluginConfigFile(type: Copy) {
@@ -63,10 +41,6 @@ task createDatabasePluginConfigFile(type: Copy) {
 }
 
 task createSecretFiles {
-    /*
-    copyExampleFile('../build/config.json.example')
-    copyExampleFile('../build/config/database_plugin.json.example')
-     */
     dependsOn 'createConfigFile'
     dependsOn 'createDatabasePluginConfigFile'
 }
@@ -96,66 +70,14 @@ task copyDependencies(type: Copy) {
     into '../build/dependencies'
 }
 
-/*
-task inputToken {
-    doFirst {
-        println 'Insert your bot token: '
-        token = inputLine()
-    }
-    def configFile = file('../build/config.json')
-    def configContent = readFileContent(configFile)
-    def newConfigContent = configContent.replaceFirst('Insert your token here !', token)
-    writeFileContent(configFile, newConfigContent)
-}
- */
-
 task install {
     group = 'build'
     description = 'Builds this project!'
 
-    // dependsOn 'build'
     dependsOn 'copyPlugins'
     dependsOn 'copyDependencies'
     dependsOn 'removePointlessBuildFolder'
     dependsOn 'createConfigFiles'
-//    dependsOn 'inputToken'
-    // TODO inputToken?
-    // TODO inputDBCredentials?
 }
 
 build.dependsOn install
-
-/*
-def copyExampleFile(filepath) {
-    Copy.from filepath
-    Copy.into filepath.substring(0, filepath.lastIndexOf('/'))
-
-    Copy.rename { String filename -> filepath.substring(filepath.lastIndexOf('/') + 1, filepath.length - 8) }
-}
- */
-
-/*
-String inputLine() {
-    Scanner scanner = new Scanner(System.in);
-    String input = scanner.nextLine();
-    scanner.close();
-    return input;
-}
-
-String readFileContent(File file) {
-    BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-    return bufferedReader.lines()
-            .collect(Collectors.joining("\n"));
-}
-
-boolean writeFileContent(File file, String content) {
-    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-    return bufferedWriter.append(content);
-}
- */
-
-/*
-void copyExampleFile(String path) throws IOException {
-    Files.copy(new File(path).toPath(), new File(path.substring(0, path.length() - 8)).toPath())
-}
-*/
