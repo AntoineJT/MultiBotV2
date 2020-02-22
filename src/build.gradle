@@ -1,11 +1,27 @@
 apply plugin: 'java'
 
-import java.io.File;
-import java.nio.file.Files;
+// import java.io.File;
+// import java.nio.file.Files;
 
 // defaultTasks 'build', 'copyPlugins', 'removePointlessBuildFolder'
 
 def pluginsPath = ['DatabasePlugin', 'ExperiencePlugin', 'ModerationPlugin', 'PollPlugin']
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+// stupid dependencies
+// TODO Get dependencies from subprojects
+dependencies {
+    // DatabasePlugin
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.3.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+    // ExperiencePlugin
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+}
 
 task copyPlugins(type: Copy) {
     for (path in pluginsPath) {
@@ -42,15 +58,23 @@ task createSecretFiles(type: Copy) {
     dependsOn 'createDatabasePluginConfigFile'
 }
 
+task copyDependencies(type: Copy) {
+    from configurations.compile
+    into '../build/dependencies'
+}
+
 task install {
     group = 'build'
     description = 'Builds this project!'
 
-    dependsOn 'build'
+    // dependsOn 'build'
     dependsOn 'copyPlugins'
+    dependsOn 'copyDependencies'
     dependsOn 'removePointlessBuildFolder'
     dependsOn 'createSecretFiles'
 }
+
+build.dependsOn install
 
 /*
 def copyExampleFile(filepath) {

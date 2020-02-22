@@ -1,6 +1,14 @@
+# ide stuff
 .idea/
+
+# logs
 build/logs/
+
+# build filled folders
+build/dependencies/*.jar
 build/plugins/*.jar
+
+# cache
 src/.gradle/
 
 # secrets
