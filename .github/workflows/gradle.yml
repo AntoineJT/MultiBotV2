@@ -23,6 +23,8 @@ jobs:
 #      run: cd ModerationPlugin/ && chmod +x gradlew && ./gradlew build && cd ../
 #    - name: Build PollPlugin
 #      run: cd PollPlugin/ && chmod +x gradlew && ./gradlew build && cd ../
+    - name: pwd
+      run: pwd
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
