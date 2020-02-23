@@ -18,6 +18,10 @@ jobs:
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
       run: ../gradlew build
+    - uses: actions/upload-artifact@v1
+      with:
+        name: DatabasePlugin.jar
+        path: src/DatabasePlugin/build/libs/DatabasePlugin-1.0-SNAPSHOT.jar
     - name: Build ExperiencePlugin
       working-directory: src/ExperiencePlugin/
       run: ../gradlew build
