@@ -17,11 +17,11 @@ jobs:
       run: cd src/ && chmod +x gradlew
     - name: Build DatabasePlugin
       run: cd src/DatabasePlugin/ && ../gradlew build
-#    - name: Build ExperiencePlugin
-#      run: cd src/ExperiencePlugin/ && chmod +x gradlew && ./gradlew build
-#    - name: Build ModerationPlugin
-#      run: cd src/ModerationPlugin/ && chmod +x gradlew && ./gradlew build
-#    - name: Build PollPlugin
-#      run: cd src/PollPlugin/ && chmod +x gradlew && ./gradlew build
+    - name: Build ExperiencePlugin
+      run: cd src/ExperiencePlugin/ && ../gradlew build
+    - name: Build ModerationPlugin
+      run: cd src/ModerationPlugin/ && ../gradlew build
+    - name: Build PollPlugin
+      run: cd src/PollPlugin/ && ../gradlew build
     - name: Build with Gradle
       run: cd src/ && ./gradlew build
