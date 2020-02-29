@@ -25,7 +25,7 @@ jobs:
       run: chmod +x gradlew
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
-      run: ../gradlew build
+      run: ../gradlew build && sudo apt-get install tree && tree ../..
     - name: Test
       run: find -L src/DatabasePlugin -type l
     - name: Build ExperiencePlugin
