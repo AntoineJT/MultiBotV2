@@ -27,6 +27,9 @@ jobs:
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
       run: ../gradlew build
+    - name: List build files
+      working-directory: src/
+      run: ls DatabasePlugin/build
     - uses: actions/upload-artifact@v1
       with:
         name: DatabasePlugin.jar
