@@ -41,7 +41,7 @@ jobs:
       run: ./gradlew build
     
     - name: Move plugins to artifacts folder
-      run: mkdir artifacts/plugins && mkdir artifacts/build && mv src/DatabasePlugin/build/libs/*.jar artifacts/plugins/ && mv src/ExperiencePlugin/build/libs/*.jar artifacts/plugins/ && mv src/ModerationPlugin/build/libs/*.jar artifacts/plugins/ && mv src/PollPlugin/build/libs/*.jar artifacts/plugins/
+      run: mkdir -p artifacts/plugins && mkdir -p artifacts/build && mv src/DatabasePlugin/build/libs/*.jar artifacts/plugins/ && mv src/ExperiencePlugin/build/libs/*.jar artifacts/plugins/ && mv src/ModerationPlugin/build/libs/*.jar artifacts/plugins/ && mv src/PollPlugin/build/libs/*.jar artifacts/plugins/
     - name: Remove .gitkeep
       run: find . -type f -name '.gitkeep' -delete
     - name: Generate build archive
