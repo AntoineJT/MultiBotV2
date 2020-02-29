@@ -24,6 +24,8 @@ jobs:
     - name: Grant execute permission for gradlew
       working-directory: src/
       run: chmod +x gradlew
+    - name: Install tree command
+      run: sudo apt-get install tree
     - name: Create an artifact folder
       working-directory: src/
       run: mkdir artifact
