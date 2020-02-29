@@ -19,8 +19,7 @@ jobs:
       working-directory: src/DatabasePlugin/
       run: ../gradlew build
     - name: Test
-      working-directory: src
-      run: ls -lR DatabasePlugin | grep ^l
+      run: find -L src/DatabasePlugin -type l
     - name: Build ExperiencePlugin
       working-directory: src/ExperiencePlugin/
       run: ../gradlew build
