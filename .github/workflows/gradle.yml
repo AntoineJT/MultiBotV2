@@ -12,39 +12,24 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Cache things
-      uses: actions/cache@v1.1.2
-      with:
-        # A directory to store and save the cache
-        path: cache
-        # An explicit key for restoring and saving the cache
-        key: ${{ runner.os }}-cache
-        # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
-        # restore-keys: # optional
     - name: Grant execute permission for gradlew
       working-directory: src/
       run: chmod +x gradlew
-    - name: Install tree command
-      run: sudo apt-get install tree
-    - name: Create an artifact folder
-      working-directory: src/
-      run: mkdir artifact
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
-      run: echo "rootProject.name = 'DatabasePlugin'" > settings.gradle ../gradlew build && tree ../..
+      run: ../gradlew build
+    - name: Test
+      working-directory: src
+      run: ls -lR DatabasePlugin | grep ^l
     - name: Build ExperiencePlugin
       working-directory: src/ExperiencePlugin/
-      run: ../gradlew build && mv build/libs/*.jar ../artifact/
+      run: ../gradlew build
     - name: Build ModerationPlugin
       working-directory: src/ModerationPlugin/
-      run: ../gradlew build && mv build/libs/*.jar ../artifact/
+      run: ../gradlew build
     - name: Build PollPlugin
       working-directory: src/PollPlugin/
-      run: ../gradlew build && mv build/libs/*.jar ../artifact/
+      run: ../gradlew build
     - name: Make a build
       working-directory: src/
       run: ./gradlew build
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        path: src/DatabasePlugin/build/artifact
