@@ -23,6 +23,7 @@ jobs:
     - name: Grant execute permission for gradlew
       working-directory: src/
       run: chmod +x gradlew
+      
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
       run: ../gradlew build
@@ -38,31 +39,23 @@ jobs:
     - name: Make a build
       working-directory: src/
       run: ./gradlew build
+    
     - name: Move plugins to artifacts folder
-      run: mkdir artifacts && mv src/DatabasePlugin/build/libs/*.jar artifacts/ && mv src/ExperiencePlugin/build/libs/*.jar artifacts/ && mv src/ModerationPlugin/build/libs/*.jar artifacts/ && mv src/PollPlugin/build/libs/*.jar artifacts/
+      run: mkdir artifacts/plugins && mkdir artifacts/build && mv src/DatabasePlugin/build/libs/*.jar artifacts/plugins/ && mv src/ExperiencePlugin/build/libs/*.jar artifacts/plugins/ && mv src/ModerationPlugin/build/libs/*.jar artifacts/plugins/ && mv src/PollPlugin/build/libs/*.jar artifacts/plugins/
+    - name: Remove .gitkeep
+      run: find . -type f -name '.gitkeep' -delete
     - name: Generate build archive
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r ./artifacts/build.zip ./build
+        args: zip -qq -r ./artifacts/build/build.zip ./build
     
-    - name: Upload artifacts
+    - name: Upload plugins
       uses: actions/upload-artifact@v1
       with:
-        name: artifacts
-        path: artifacts
-
-    
-    - name: Install and run tree
-      run: sudo apt-get install tree && tree
-    
-#    - name: Generate build archive
-#      uses: thedoctor0/zip-release@master
-#      with:
-#        filename: 'build.zip'
-#        path: build/
-#        exclusions: '*.git* /*node_modules/* .editorconfig'
-#    - name: Upload generated archive
-#      uses: actions/upload-artifact@v1
-#      with:
-#        name: build.zip
-#        path: build/build.zip
+        name: plugins.zip
+        path: artifacts/plugins
+    - name: Upload build
+      uses: actions/upload-artifact@v1
+      with:
+        name: build.zip
+        path: artifacts/build
