@@ -26,11 +26,6 @@ jobs:
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
       run: ../gradlew build
-    - name: Upload DatabasePlugin artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: DatabasePlugin.jar
-        path: src/DatabasePlugin/build/libs
     - name: Build ExperiencePlugin
       working-directory: src/ExperiencePlugin/
       run: ../gradlew build
@@ -43,10 +38,19 @@ jobs:
     - name: Make a build
       working-directory: src/
       run: ./gradlew build
+    - name: Move plugins to artifacts folder
+      run: mkdir artifacts && mv src/DatabasePlugin/build/libs/*.jar artifacts/ && mv src/ExperiencePlugin/build/libs/*.jar artifacts/ && mv src/ModerationPlugin/build/libs/*.jar artifacts/ && mv src/PollPlugin/build/libs/*.jar artifacts/
     - name: Generate build archive
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r ./build.zip ./build
+        args: zip -qq -r ./artifacts/build.zip ./build
+    
+    - name: Upload DatabasePlugin artifact
+      uses: actions/upload-artifact@v1
+      with:
+        path: artifacts
+
+    
     - name: Install and run tree
       run: sudo apt-get install tree && tree
     
