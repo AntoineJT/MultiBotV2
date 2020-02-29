@@ -28,6 +28,11 @@ jobs:
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
       run: ../gradlew build
+    - name: Upload DatabasePlugin artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: DatabasePlugin.jar
+        path: src/DatabasePlugin/build/libs
     - name: Tree
       working-directory: src/DatabasePlugin/
       run: tree
