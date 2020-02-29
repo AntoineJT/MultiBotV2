@@ -45,9 +45,10 @@ jobs:
       with:
         args: zip -qq -r ./artifacts/build.zip ./build
     
-    - name: Upload DatabasePlugin artifact
+    - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
+        name: artifacts
         path: artifacts
 
     
