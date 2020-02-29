@@ -29,7 +29,7 @@ jobs:
       run: mkdir artifact
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
-      run: ../gradlew build && mv build/libs/*.jar ../artifact/
+      run: ../gradlew build && tree
     - name: Build ExperiencePlugin
       working-directory: src/ExperiencePlugin/
       run: ../gradlew build && mv build/libs/*.jar ../artifact/
