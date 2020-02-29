@@ -44,13 +44,20 @@ jobs:
       working-directory: src/
       run: ./gradlew build
     - name: Generate build archive
-      uses: thedoctor0/zip-release@master
+      uses: montudor/action-zip@v0.1.0
       with:
-        filename: 'build.zip'
-        path: build/
-        exclusions: '*.git* /*node_modules/* .editorconfig'
-    - name: Upload generated archive
-      uses: actions/upload-artifact@v1
-      with:
-        name: build.zip
-        path: build/build.zip
+        args: zip -qq -r ./build.zip ./build
+    - name: Install and run tree
+      run: sudo apt-get install tree && tree
+    
+#    - name: Generate build archive
+#      uses: thedoctor0/zip-release@master
+#      with:
+#        filename: 'build.zip'
+#        path: build/
+#        exclusions: '*.git* /*node_modules/* .editorconfig'
+#    - name: Upload generated archive
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: build.zip
+#        path: build/build.zip
