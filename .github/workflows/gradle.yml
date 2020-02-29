@@ -23,11 +23,14 @@ jobs:
     - name: Grant execute permission for gradlew
       working-directory: src/
       run: chmod +x gradlew
+    - name: Install tree command
+      run: sudo apt-get install tree
     - name: Build DatabasePlugin
       working-directory: src/DatabasePlugin/
-      run: ../gradlew build && sudo apt-get install tree && tree ../..
-    - name: Test
-      run: find -L src/DatabasePlugin -type l
+      run: ../gradlew build
+    - name: Tree
+      working-directory: src/DatabasePlugin/
+      run: tree
     - name: Build ExperiencePlugin
       working-directory: src/ExperiencePlugin/
       run: ../gradlew build
