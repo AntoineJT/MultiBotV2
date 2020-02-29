@@ -49,5 +49,8 @@ jobs:
         filename: 'build.zip'
         path: build/
         exclusions: '*.git* /*node_modules/* .editorconfig'
-    - name: Install tree command then run it
-      run: sudo apt-get install tree && tree
+    - name: Upload generated archive
+      uses: actions/upload-artifact@v1
+      with:
+        name: build.zip
+        path: build/build.zip
