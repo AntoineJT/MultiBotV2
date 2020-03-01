@@ -3,11 +3,11 @@ name: Build only
 on:
   push:
     branches-ignore: [master]
-    paths-ignore: |
-      'build/'
-      '.gitattributes'
-      '.gitignore'
-      'README.md'
+    paths-ignore:
+      - 'build/'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'README.md'
 
 jobs:
   build:
