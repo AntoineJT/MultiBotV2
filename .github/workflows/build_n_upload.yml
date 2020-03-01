@@ -3,7 +3,7 @@ name: Build & Upload
 on:
   pull_request:
   push:
-    branches: [master]
+    branches: [master, feature/improve-ci]
 
 jobs:
   build:
