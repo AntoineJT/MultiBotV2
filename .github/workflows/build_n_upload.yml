@@ -3,6 +3,10 @@ name: Build & Upload
 on:
   push:
     branches: [master]
+    paths-ignore: |
+      '.gitattributes'
+      '.gitignore'
+      'README.md'
 
 jobs:
   build:
