@@ -1,0 +1,20 @@
+# ide stuff
+.idea/
+
+# logs
+build/logs/
+
+# build filled folders
+build/dependencies/*.jar
+build/plugins/*.jar
+
+# cache
+src/.gradle/
+
+# config files
+# -> secrets
+build/config.json
+build/config/database_plugin.json
+# -> user config files
+build/config/moderation_plugin.json
+build/config/poll_plugin.json

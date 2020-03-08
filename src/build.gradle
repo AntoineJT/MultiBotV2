@@ -1,0 +1,83 @@
+apply plugin: 'java'
+
+def pluginsPath = ['DatabasePlugin', 'ExperiencePlugin', 'ModerationPlugin', 'PollPlugin']
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    // DatabasePlugin
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.3.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+    // ExperiencePlugin
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+}
+
+task copyPlugins(type: Copy) {
+    for (path in pluginsPath) {
+        from "${path}/build/libs/${path}-1.0-SNAPSHOT.jar"
+        into '../build/plugins'
+    }
+}
+
+task removePointlessBuildFolder(type: Delete) {
+    delete 'build/'
+}
+
+task createConfigFile(type: Copy) {
+    from '../build/config.json.example'
+    into '../build'
+
+    rename { String filename -> 'config.json' }
+}
+
+task createDatabasePluginConfigFile(type: Copy) {
+    from '../build/config/database_plugin.json.example'
+    into '../build/config'
+
+    rename { String filename -> 'database_plugin.json' }
+}
+
+task createSecretFiles {
+    dependsOn 'createConfigFile'
+    dependsOn 'createDatabasePluginConfigFile'
+}
+
+task createModerationConfigFile(type: Copy) {
+    from '../build/config/moderation_plugin.json.example'
+    into '../build/config'
+
+    rename { String filename -> 'moderation_plugin.json' }
+}
+
+task createPollConfigFile(type: Copy) {
+    from '../build/config/poll_plugin.json.example'
+    into '../build/config'
+
+    rename { String filename -> 'poll_plugin.json' }
+}
+
+task createConfigFiles {
+    dependsOn 'createSecretFiles'
+    dependsOn 'createModerationConfigFile'
+    dependsOn 'createPollConfigFile'
+}
+
+task copyDependencies(type: Copy) {
+    from configurations.compile
+    into '../build/dependencies'
+}
+
+task install {
+    group = 'build'
+    description = 'Builds this project!'
+
+    dependsOn 'copyPlugins'
+    dependsOn 'copyDependencies'
+    dependsOn 'removePointlessBuildFolder'
+    dependsOn 'createConfigFiles'
+}
+
+build.dependsOn install

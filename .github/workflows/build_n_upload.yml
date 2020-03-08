@@ -1,0 +1,73 @@
+name: Build & Upload
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - '.gitattributes'
+      - '.gitignore'
+      - 'README.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Checkout submodules
+      shell: bash
+      run: |
+        # If your submodules are configured to use SSH instead of HTTPS please uncomment the following line
+        # git config --global url."https://github.com/".insteadOf "git@github.com:"
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Grant execute permission for gradlew
+      working-directory: src/
+      run: chmod +x gradlew
+      
+    - name: Build DatabasePlugin
+      working-directory: src/DatabasePlugin/
+      run: ../gradlew build
+    - name: Build ExperiencePlugin
+      working-directory: src/ExperiencePlugin/
+      run: ../gradlew build
+    - name: Build ModerationPlugin
+      working-directory: src/ModerationPlugin/
+      run: ../gradlew build
+    - name: Build PollPlugin
+      working-directory: src/PollPlugin/
+      run: ../gradlew build
+    - name: Make a build
+      working-directory: src/
+      run: ./gradlew build
+    
+    - name: Move plugins to artifacts folder
+      run: | 
+        mkdir -p artifacts/plugins 
+        mkdir -p artifacts/build 
+        mv src/DatabasePlugin/build/libs/*.jar artifacts/plugins/ 
+        mv src/ExperiencePlugin/build/libs/*.jar artifacts/plugins/ 
+        mv src/ModerationPlugin/build/libs/*.jar artifacts/plugins/ 
+        mv src/PollPlugin/build/libs/*.jar artifacts/plugins/
+    - name: Remove .gitkeep
+      run: find . -type f -name '.gitkeep' -delete
+    - name: Generate build archive
+      uses: montudor/action-zip@v0.1.0
+      with:
+        args: zip -qq -r ./artifacts/build/build.zip ./build
+    
+    - name: Upload plugins
+      uses: actions/upload-artifact@v1
+      with:
+        name: plugins.zip
+        path: artifacts/plugins
+    - name: Upload build
+      uses: actions/upload-artifact@v1
+      with:
+        name: build.zip
+        path: artifacts/build
